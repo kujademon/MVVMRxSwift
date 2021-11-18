@@ -37,6 +37,20 @@ class ViewController: UIViewController {
             index, viewModel, cell in
             cell.textLabel?.text = viewModel.displayText
         }.disposed(by: disposeBag)
+        
+//        Observable
+//            .zip(tableView.rx.itemSelected, tableView.rx.modelSelected(RestaurantViewModel.self))
+//            .bind { [unowned self] indexPath, model in
+//                self.tableView.deselectRow(at: indexPath, animated: true)
+//                print("Selected " + model.displayText + " at \(indexPath)")
+//            }
+//            .disposed(by: disposeBag)
+        
+        tableView.rx.modelSelected(RestaurantViewModel.self)
+                .subscribe(onNext: { [weak self] item in
+                    // other actions with Item object
+                    print("Selected " + item.displayText)
+                }).disposed(by: disposeBag)
     }
     
     
